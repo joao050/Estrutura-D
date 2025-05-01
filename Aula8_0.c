@@ -95,7 +95,7 @@ float **cria_matriz(int n_linhas, int n_colunas)
 
     // seguinte... pra criar esse tipo matriz da pra seguir sempre esse modelo
      
-    float **mat = (float **)malloc(n_linhas * sizeof(float *));
+    float **mat = (float **)malloc(n_linhas * sizeof(float *)); //aloca um vetor de ponteiros para n_linhas
     if (mat == NULL)
     {
         return NULL;
@@ -103,7 +103,8 @@ float **cria_matriz(int n_linhas, int n_colunas)
 
     for (int i = 0; i < n_linhas; i++)
     {
-        mat[i] = (float *)malloc(n_colunas * sizeof(float));
+        mat[i] = (float *)malloc(n_colunas * sizeof(float)); // aloca as colunas para cada linha
+
         if (mat[i] == NULL)
         {
             // Caso falhe é recomendado liberar a memória anterior pra não ter vazamento de memória... recomendação ChatGPT
@@ -115,6 +116,7 @@ float **cria_matriz(int n_linhas, int n_colunas)
             return NULL;
         }
     }
+
     // pontos a destacar:
     // criação de uma variavel com ponteiro de ponterio (float **mat)
     // casting do tipo de dado antes do malloc (float **)
@@ -129,9 +131,9 @@ void libera_matriz(float **matriz, int n_linhas)
 {
     for (int i = 0; i < n_linhas; i++)
     {
-        free(matriz[i]);
+        free(matriz[i]); // primeiro libera as colunas das linhas
     }
-    free(matriz);
+    free(matriz); // depois as linhas
 }
 // modularizar o preenchimento da matriz
 void preenche_matriz(float **matriz, int n_linhas, int n_colunas)
@@ -165,13 +167,14 @@ void imprime_matriz(float **matriz, int n_linhas, int n_colunas)
 // Transpor matriz OBS:eu não fazia ideia do que era isso...
 float **transpor_matriz(float **matriz, int n_linhas, int n_colunas)
 {
-    float **mat = cria_matriz(n_colunas, n_linhas);
+    float **mat = cria_matriz(n_colunas, n_linhas); // **recursividade manos, utilizando uma função dentro de outra função
     if (mat == NULL)
     {
         printf("Alocação pra matriz trasposta falhou.");
         return NULL;
     }
 
+    // transpondo a matriz
     for (int i = 0; i < n_linhas; i++)
     {
         for (int j = 0; j < n_colunas; j++)

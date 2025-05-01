@@ -17,7 +17,7 @@ int main()
     float *notas = malloc(n * sizeof(float));//'malloc()' Aloca n posições na memoria pra um vetor
     // Malloc() função de alocacao de memoria da lib stdlib.h
     // n >> quantidade de dados para alocar
-    // sizeof(tipo_dado) >> tamanho de cada elemento(eu acho)
+    // sizeof(tipo_dado) >> tamanho de cada elemento
 
     if (notas == NULL)// caso a alocacao falhe malloc retorna null, um erro
     {
