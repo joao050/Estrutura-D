@@ -5,9 +5,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-
-float **aloca_matriz(int n, int m);// função pra alocar memória pra uma matriz
-void pree_matriz(float **matriz, int n, int m); // preencher a matriz (passagem por referência)
+float **aloca_matriz(int n, int m);                          // função pra alocar memória pra uma matriz
+void pree_matriz(float **matriz, int n, int m);              // preencher a matriz (passagem por referência)
 void calc_media(float **matriz, float *vetor, int n, int m); // calcula media e armazena no vetor de medias (passagem por referência)
 
 int main()
@@ -18,6 +17,7 @@ int main()
     scanf("%d", &n_alunos);
     printf("Cada aluno tem quantas notas:");
     scanf("%d", &m_notas);
+    // att: avaliação de entrada seria uma boa prática
 
     // criação da matriz com memória alocada dinamicamente
     float **notas_alunos = aloca_matriz(n_alunos, m_notas);
@@ -34,9 +34,17 @@ int main()
 
     // alocando memória dinamicamente pra um vetor, simples...
     float *media_alunos = (float *)malloc(n_alunos * sizeof(float));
+    // att:
+    // pra não ocorrer vazamento de memória
+    // se a alocação do vetor de médias falhou tem que liberar a matriz notas_alunos antes de retornar 1;
     if (media_alunos == NULL)
     {
-        printf("Alocação de memoria falhou.");
+        printf("Alocação de memória para vetor de médias falhou.\n");
+        for (int i = 0; i < n_alunos; i++)
+        {
+            free(notas_alunos[i]);
+        }
+        free(notas_alunos);
         return 1;
     }
 
@@ -47,17 +55,17 @@ int main()
     printf("Boletin de medias:\n");
     for (int i = 0; i < n_alunos; i++)
     {
-        printf("Media do aluno %d: %.2f\n", i+1, media_alunos[i]);
+        printf("Media do aluno %d: %.2f\n", i + 1, media_alunos[i]);
     }
-    
-    //não pode esquecer de liberar a memória
+
+    // não pode esquecer de liberar a memória
     for (int i = 0; i < n_alunos; i++)
     {
         free(notas_alunos[i]); // liberando cada coluna antes das linhas da matriz
     }
     free(notas_alunos);
     free(media_alunos);
-    
+
     return 0;
 }
 // aloca memória dinamicamente para uma matriz
@@ -102,6 +110,7 @@ void pree_matriz(float **matriz, int n, int m)
             scanf("%f", &matriz[i][j]);
         }
     }
+    // att: avaliação de entrada seria uma boa prática...
 }
 // att a passagem por referencia (matriz e vetor)
 void calc_media(float **matriz, float *vetor, int n, int m)
