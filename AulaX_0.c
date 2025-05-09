@@ -51,6 +51,10 @@ int main()
     cop[0] = 'P';
     printf("Nome copiado e alterado: %s\n", cop);
 
+
+    //Liberando a memória da string que recebeu a copia
+    free(cop);
+
     return 0;
 }
 // imprime os caracteres da cadeia enquanto não encontrar o '\0'(caractere que finaliza strings)
