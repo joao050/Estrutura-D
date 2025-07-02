@@ -27,6 +27,12 @@ Lista *lista_retira(Lista *list, int valor);
 //função para destruir uma lista
 void lista_libera(Lista *list);
 
+// Insere um novo elemento na lista em ordem
+Lista *lista_insere_ordenado(Lista *list, int v);
+
+
+//Função para verificar se duas listas são iguis
+int lista_iguis(Lista *list1, Lista *list2);
 #include"TAD_LISTA.c"
 
 #endif

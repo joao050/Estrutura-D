@@ -7,6 +7,7 @@
 int main()
 {
     Lista *minha_lista = lista_cria();
+    Lista *minha_segunda_lista = lista_cria();
 
     if (lista_vazia(minha_lista) == 1)
     {
@@ -15,12 +16,27 @@ int main()
 
     printf("Inserindo numeros...\n");
 
-    minha_lista = lista_insere(minha_lista, 1);
-    minha_lista = lista_insere(minha_lista, 2);
-    minha_lista = lista_insere(minha_lista, 3);
-    minha_lista = lista_insere(minha_lista, 4);
-    minha_lista = lista_insere(minha_lista, 5);
+    for (int i = 0; i < 50; i++)
+    {
+        minha_lista = lista_insere_ordenado(minha_lista, i + 1);
+    }
 
+    for (int i = 0; i < 50; i++)
+    {
+        minha_segunda_lista = lista_insere_ordenado(minha_segunda_lista, i + 1);
+    }
+
+    printf("As listas sao ");
+    if (lista_iguis(minha_lista, minha_segunda_lista))
+    {
+        printf("deiferentes\n");
+    }
+    else
+    {
+        printf("iguais\n");
+    }
+    
+    
     if (lista_vazia(minha_lista) == 0)
     {
         printf("A lista nao esta vazia.\n");

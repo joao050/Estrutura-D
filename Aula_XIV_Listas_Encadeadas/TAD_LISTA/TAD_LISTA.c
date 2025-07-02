@@ -67,7 +67,8 @@ Lista *lista_busca(Lista *list, int valor)
     if (lista_vazia(list) == 0)
     {
         Lista *p;
-        for (p = list; p != NULL; p = p->prox)
+        // Busca eficiente
+        for (p = list; p != NULL && p->valor <= valor; p = p->prox)
         {
             if (p->valor == valor)
             {
@@ -75,7 +76,6 @@ Lista *lista_busca(Lista *list, int valor)
             }
         }
     }
-    printf("A lista esta vazia.\n");
     return NULL;
 }
 
@@ -127,4 +127,60 @@ void lista_libera(Lista *list)
         free(p);               // libera a memória
         p = temp;              // agora o p aponta para o próximo elemento
     }
+}
+
+// Insere um novo elemento na lista em ordem
+Lista *lista_insere_ordenado(Lista *list, int v)
+{
+    Lista *ant = NULL;
+    Lista *p = list;
+    Lista *novo;
+
+    // encontra a posição de inserir
+    while (p != NULL && p->valor <= v)
+    {
+        ant = p;
+        p = p->prox;
+    }
+
+    // cria umm novo elemento
+    novo = (Lista *)malloc(sizeof(Lista));
+    if (!novo)
+    {
+        printf("Falha em criar novo elemento.\n");
+        exit(1);
+    }
+    novo->valor = v;
+
+    // O elemento está no inicio da lista
+    if (ant == NULL)
+    {
+        novo->prox = list;
+        list = novo;
+    }
+    else
+    {
+        // O elemento está no meio ou no final
+        novo->prox = p;
+        ant->prox = novo;
+    }
+
+    return list;
+}
+
+//Função para verificar se duas listas são iguis
+int lista_iguis(Lista *list1, Lista *list2)
+{
+    Lista *p1;
+    Lista *p2;
+
+    for ( p1 = list1, p2 = list2; p1 != NULL && p2 == NULL; p1 = p1->prox, p2 = p2->prox)
+    {
+        if (p1 != p2)
+        {
+            return 0;
+        }
+        
+    }
+    return p1==p2;
 }
